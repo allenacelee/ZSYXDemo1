@@ -1,0 +1,52 @@
+{
+  "test_check_task_query_U": [
+    {
+      "taskName": "检查信息保护印章情况",
+      "endTime": "2017-03-02",
+      "manager": "王振东",
+      "officeName": "",
+      "state": "A",
+      "isOver": false
+    },
+    {
+      "taskName": "检查信息保护印章情况",
+      "endTime": "2017-03-02",
+      "manager": "王振东",
+      "officeName": "",
+      "state": "A",
+      "isOver": false
+    },
+    {
+      "taskName": "巡店任务",
+      "endTime": "",
+      "manager": "孤鸿儒",
+      "officeName": "北京城兴合顺科技有限公司（南小街二队院）合作厅",
+      "state": "B",
+      "isOver": true
+    },
+    {
+      "taskName": "检查实名信息保护公章",
+      "endTime": "2017-03-01",
+      "manager": "万娜",
+      "officeName": "",
+      "state": "B",
+      "isOver": false
+    },
+    {
+      "taskName": "巡店任务",
+      "endTime": "",
+      "manager": "孤鸿儒",
+      "officeName": "北京城兴合顺科技有限公司（南小街二队院）合作厅",
+      "state": "B",
+      "isOver": true
+    },
+    {
+      "taskName": "检查实名信息保护公章",
+      "endTime": "2017-03-01",
+      "manager": "万娜",
+      "officeName": "",
+      "state": "B",
+      "isOver": false
+    },
+  ]
+}

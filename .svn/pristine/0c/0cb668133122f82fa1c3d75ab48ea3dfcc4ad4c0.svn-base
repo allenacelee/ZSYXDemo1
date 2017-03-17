@@ -1,0 +1,70 @@
+/**
+ * @file AutoCheckComponent
+ * @author liana
+ * @version 1.0
+ **/
+
+import React, {Component} from 'react'
+import {
+    View,
+    Text,
+    StyleSheet,
+    Dimensions,
+} from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome';
+const width = Dimensions.get('window').width;
+
+export default class AutoCheckComponent extends Component {
+    static defaultProps = {
+        rowData: {},
+    };
+
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        let rowData = this.props.rowData;
+        return (
+            <View style={styles.container}>
+                <View style={styles.info}>
+                    <Text style={[styles.text, {width: width * 0.7}]}>{rowData.taskName}</Text>
+                    <Text
+                        style={[styles.text, {width: width * 0.9, paddingBottom: 10}]}>地址:{rowData.officeAddress}</Text>
+                </View>
+                <View style={styles.officeCode}>
+                    <Text style={{color: '#555'}}>{rowData.officeCode}</Text>
+                </View>
+                <View style={styles.angle}>
+                    <Icon name='angle-right' size={30} style={{color: 'orange'}}/>
+                </View>
+            </View>
+        )
+    }
+}
+const styles = StyleSheet.create({
+    container: {
+        height: 90,
+        borderTopWidth: 1,
+        borderTopColor: '#e5e5e5',
+        flexDirection: 'row',
+    },
+    info: {
+        marginTop: 10,
+        marginLeft: 10,
+        justifyContent: 'space-between',
+    },
+    text: {
+        color: '#555',
+    },
+    officeCode: {
+        position: 'absolute',
+        top: 10,
+        right: width * 0.10,
+    },
+    angle: {
+        position: 'absolute',
+        top: 30,
+        right: width * 0.05
+    },
+});

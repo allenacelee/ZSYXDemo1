@@ -1,0 +1,145 @@
+/**
+ * =========================================================================
+ *
+ * @file TaskCheckExecuteTabSign
+ * @description 任务巡店功能点巡店执行页面Tab页面巡店签到
+ * =========================================================================
+ *
+ * @author wanghai
+ * @date 2017/3/6
+ * @version 1.0
+ * =========================================================================
+ */
+
+
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    View,
+    Button,
+    Dimensions,
+    Text,
+    TouchableOpacity,
+    Image,
+} from 'react-native';
+
+import Indicator from '../../../Pub/Indicator/Indicator'
+import CheckController from '../CheckController';
+
+const {width} = Dimensions.get("window");
+
+export default class TaskCheckExecuteTabSign extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            locationX: '',
+            locationY: '',
+            locationName: '',
+            signAble: false,
+            modalVisible: false,
+        };
+        this.checkController = new CheckController(this);
+    }
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <Indicator
+                    visible={this.state.modalVisible}
+                    text="定位中"
+                />
+                <Image style={{width: width, height: width,}}
+                       source={{uri: "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"}}/>
+                {/* 经纬度 */}
+                {this.state.signAble ?
+                    <View style={styles.locationStyle}>
+                        <Text style={styles.locationText}>经纬度 : {this.state.locationX} , {this.state.locationY}</Text>
+                        <Text style={styles.locationText}>{this.state.locationName}</Text>
+                    </View>
+                    :
+                    <View style={styles.locationStyle}>
+                        <Text style={styles.locationText}>请获取地理位置</Text>
+                    </View>
+                }
+                <View style={styles.signBtnStyle}>
+                    {/* GPS定位 */}
+                    <TouchableOpacity onPress={()=>this.clickOnBtn(0)}>
+                        <View style={[styles.btnStyle, {backgroundColor: '#00B1F0'}]}>
+                            <Text style={{color: 'white'}}>GPS定位</Text>
+                        </View>
+                    </TouchableOpacity>
+                    {/* 签到 */}
+                    <TouchableOpacity onPress={()=>this.clickOnBtn(1)}>
+                        <View style={[styles.btnStyle, {backgroundColor: this.state.signAble ? '#00B1F0' : 'gray'}]}>
+                            <Text style={{color: 'white'}}>签到</Text>
+                        </View>
+                    </TouchableOpacity>
+                    {/* 手动签到 */}
+                    <TouchableOpacity onPress={()=>this.clickOnBtn(2)}>
+                        <View style={[styles.btnStyle, {backgroundColor: '#00B1F0'}]}>
+                            <Text style={{color: 'white'}}>手动签到</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        )
+    }
+
+    clickOnBtn(index) {
+        switch (index) {
+            case 0:
+                this.setState({
+                    modalVisible: true,
+                });
+                setTimeout(()=> {
+                    this.setState({
+                        locationX: '116.587188',
+                        locationY: '39.81351',
+                        locationName: '北京市朝阳区北苑路乙108号',
+                        signAble: true,
+                        modalVisible: false,
+                    });
+                }, 1000);
+                break;
+            case 1:
+                if (this.state.signAble) {
+                    alert('签到成功');
+                } else {
+                    alert('请先进行定位');
+                }
+                break;
+            case 2:
+                alert('手动签到');
+        }
+    }
+
+}
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'white',
+        width: width,
+    },
+    locationStyle: {
+        justifyContent: 'center',
+        marginLeft: 30,
+        marginVertical: 20,
+        height: 50,
+    },
+    signBtnStyle: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+    },
+    btnStyle: {
+        borderRadius: 5.0,
+        width: 70,
+        height: 30,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    locationText: {
+        fontSize: 15,
+    }
+});

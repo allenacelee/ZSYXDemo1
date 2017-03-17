@@ -1,0 +1,92 @@
+/**
+ * =========================================================================
+ *
+ * @file CheckTaskQueryComponent
+ * @description 自主巡店功能点列表公共组件
+ * =========================================================================
+ *
+ * @author linzixiong
+ * @date 2017/3/6
+ * @version 1.0
+ * =========================================================================
+ */
+
+import React, {Component} from 'react';
+import {
+    Text,
+    View,
+    Dimensions,
+    StyleSheet,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+const width = Dimensions.get('window').width;
+
+export default class CheckTaskQueryComponent extends Component {
+    static defaultProps = {
+        rowData: {},
+    };
+
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        let rowData = this.props.rowData;
+        return (
+            <View style={sytles.container}>
+                <View style={sytles.info}>
+                    <Text style={[sytles.infotext, {color: '#555', width: width * 0.5}]}>{rowData.taskName}</Text>
+                    <Text style={[sytles.infotext, {color: '#555', width: width * 0.88}]}>{rowData.officeName}</Text>
+                    <View style={[{flexDirection: 'row'}, sytles.infotext]}>
+                        <Text style={{color: '#ccc'}}>
+                            {
+                                rowData.state == 'A' ?
+                                    "未处理" : rowData.state == 'B' ?
+                                    "已处理" : "过期未处理"
+                            }
+                        </Text>
+                        <Text style={{marginLeft: 10, color: '#ccc'}}>
+                            {
+                                rowData.isOver ? "已过期" : "未过期"
+                            }
+                        </Text>
+                        <Text style={{color: '#555', marginLeft: 70,}}>{rowData.endTime}</Text>
+                    </View>
+                </View>
+                <View style={sytles.timeinfo}>
+                    <Text style={{marginLeft: 10, color: '#555'}}>{rowData.manager}</Text>
+                </View>
+                <View style={sytles.angle}>
+                    <Icon name="angle-right" size={30} style={{color: 'orange'}}/>
+                </View>
+            </View>
+        )
+    }
+}
+const sytles = StyleSheet.create({
+    container: {
+        borderTopWidth: 1,
+        borderTopColor: '#e5e5e5',
+        height: 100,
+        flexDirection: 'row',
+    },
+    info: {
+        marginTop: 6,
+        justifyContent: 'space-around',
+    },
+    infotext: {
+        marginLeft: width * 0.03,
+        padding: 6,
+    },
+    timeinfo: {
+        flexDirection: 'row',
+        position: 'absolute',
+        top: 10,
+        right: width * 0.1,
+    },
+    angle: {
+        position: 'absolute',
+        top: 30,
+        right: width * 0.05,
+    }
+});

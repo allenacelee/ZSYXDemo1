@@ -1,0 +1,76 @@
+{
+  "test_check_tast_creater_query": [
+    {
+      "monthId": "201509",
+      "busiType": "01",
+      "qujuName": "二区",
+      "quju": "225",
+      "fenjuName": "上地分局",
+      "fenju": "6300",
+      "wanggeName": "上地开发区网格",
+      "wangge": "112630",
+      "staffId": "1700102",
+      "staffName": "万娜"
+    },
+    {
+      "monthId": "201509",
+      "busiType": "01",
+      "qujuName": "二区",
+      "quju": "225",
+      "fenjuName": "清河分局",
+      "fenju": "6200",
+      "wanggeName": "倚林网格",
+      "wangge": "112563",
+      "staffId": "1700202",
+      "staffName": "孤鸿儒"
+    },
+    {
+      "monthId": "201509",
+      "busiType": "01",
+      "qujuName": "二区",
+      "quju": "225",
+      "fenjuName": "清河分局",
+      "fenju": "6200",
+      "wanggeName": "君安网格",
+      "wangge": "112560",
+      "staffId": "1700113",
+      "staffName": "李兆峰"
+    },
+    {
+      "monthId": "201509",
+      "busiType": "01",
+      "qujuName": "二区",
+      "quju": "225",
+      "fenjuName": "大有庄分局",
+      "fenju": "6100",
+      "wanggeName": "西北旺网格",
+      "wangge": "112627",
+      "staffId": "1700112",
+      "staffName": "王振东"
+    },
+    {
+      "monthId": "201509",
+      "busiType": "01",
+      "qujuName": "二区",
+      "quju": "225",
+      "fenjuName": "大有庄分局",
+      "fenju": "6100",
+      "wanggeName": "林科网格",
+      "wangge": "112623",
+      "staffId": "1700111",
+      "staffName": "刘若英"
+    },
+    {
+      "monthId": "201509",
+      "busiType": "01",
+      "qujuName": "二区",
+      "quju": "225",
+      "fenjuName": "中关村分局",
+      "fenju": "5900",
+      "wanggeName": "海淀图书城网格",
+      "wangge": "300409",
+      "staffId": "1700102",
+      "staffName": "谢霆锋"
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "indexCycle": "D",
+  "indexCode": "KPI510",
+  "maxValue": 40,
+  "listType": 0,
+  "data": [
+    {
+      "id": "225",
+      "text": "二区",
+      "areaType": "30",
+      "value": "23",
+      "last": "22",
+      "sum": "390"
+    },
+    {
+      "id": "226",
+      "text": "三区",
+      "areaType": "30",
+      "value": "31",
+      "last": "15",
+      "sum": "349"
+    },
+    {
+      "id": "211",
+      "text": "四区",
+      "areaType": "30",
+      "value": "26",
+      "last": "33",
+      "sum": "515"
+    },
+    {
+      "id": "212",
+      "text": "五区",
+      "areaType": "30",
+      "value": "17",
+      "last": "21",
+      "sum": "333"
+    },
+    {
+      "id": "213",
+      "text": "七区",
+      "areaType": "30",
+      "value": "37",
+      "last": "41",
+      "sum": "569"
+    },
+    {
+      "id": "214",
+      "text": "八区",
+      "areaType": "30",
+      "value": "7",
+      "last": "18",
+      "sum": "225"
+    },
+    {
+      "id": "217",
+      "text": "通州",
+      "areaType": "30",
+      "value": "12",
+      "last": "16",
+      "sum": "276"
+    },
+    {
+      "id": "219",
+      "text": "昌平",
+      "areaType": "30",
+      "value": "7",
+      "last": "12",
+      "sum": "180"
+    },
+    {
+      "id": "220",
+      "text": "大兴",
+      "areaType": "30",
+      "value": "22",
+      "last": "20",
+      "sum": "341"
+    },
+    {
+      "id": "218",
+      "text": "顺义",
+      "areaType": "30",
+      "value": "6",
+      "last": "10",
+      "sum": "222"
+    },
+    {
+      "id": "216",
+      "text": "房山",
+      "areaType": "30",
+      "value": "15",
+      "last": "31",
+      "sum": "235"
+    },
+    {
+      "id": "223",
+      "text": "密云",
+      "areaType": "30",
+      "value": "0",
+      "last": "2",
+      "sum": "40"
+    },
+    {
+      "id": "221",
+      "text": "怀柔",
+      "areaType": "30",
+      "value": "7",
+      "last": "5",
+      "sum": "74"
+    },
+    {
+      "id": "215",
+      "text": "门头沟",
+      "areaType": "30",
+      "value": "6",
+      "last": "2",
+      "sum": "75"
+    },
+    {
+      "id": "222",
+      "text": "平谷",
+      "areaType": "30",
+      "value": "3",
+      "last": "3",
+      "sum": "69"
+    },
+    {
+      "id": "224",
+      "text": "延庆",
+      "areaType": "30",
+      "value": "1",
+      "last": "7",
+      "sum": "68"
+    },
+    {
+      "id": "227",
+      "text": "重通局",
+      "areaType": "30",
+      "value": "0",
+      "last": "0",
+      "sum": "1"
+    },
+    {
+      "id": "228",
+      "text": "公司大帐",
+      "areaType": "30",
+      "value": "0",
+      "last": "0",
+      "sum": "5"
+    }
+  ]
+}

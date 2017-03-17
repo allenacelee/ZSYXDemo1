@@ -1,0 +1,226 @@
+/**
+ * =========================================================================
+ *
+ * @file 指标页面下级的Demo
+ * @description
+ * =========================================================================
+ *
+ * @author linzixiong
+ * @date 2016/12/8
+ * @version 1.0
+ * =========================================================================
+ */
+
+
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    View,
+    Button,
+    WebView,
+    Text,
+    Platform,
+    TouchableOpacity
+} from 'react-native';
+
+import QuotaDemo2 from './QuotaDemo/QuotaDemo2'
+let preState = null;
+export default class Chart extends Component {
+    static defaultProps = {
+        title: 'new',
+        chartData: null,
+        navigator: null,
+        accdate:null,
+    };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+           chartData:this.props.chartData,
+            url:require('./QuotaDemo/repaint.html')
+        }
+    }
+    componentWillReceiveProps(nextProps){
+
+        this.setState({
+            chartData:nextProps.chartData,
+
+        })
+        console.log("im in ");
+        console.log(nextProps.chartData);
+        if(this.props.chartData !=nextProps.chartData){this.web.reload();}
+
+
+    }
+
+    render() {
+        let script = `
+        var lineData = ${JSON.stringify(this.state.chartData)};
+        function initData(originalData) {
+        var chart = new Object();
+        chart.title = originalData.title;
+        chart.type = originalData.type;
+        chart.xInfo = originalData.xInfo;
+        chart.yInfo = originalData.yInfo;
+        chart.name = originalData.name;
+        chart.data = originalData.data;
+        return chart;
+        };
+        var eData = initData(lineData);
+        var myChart = echarts.init(document.getElementById('chart'));
+        function initChart(chartData) {
+
+        if (chartData.type == 'line') {
+            currentPoint = new Object();
+            currentPoint.value = chartData.data[chartData.data.length - 1];
+            currentPoint.itemStyle = {normal: {color: '#598CAF'}};
+            chartData.data[chartData.data.length - 1] = currentPoint;
+        }
+        var option = {
+            title: {
+                text: chartData.title,
+                left: 'center'
+            },
+            grid: {
+                x: chartData.type == 'line' ? '10%' : '15%',
+
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a}{b}:{c}'
+             },
+      
+            xAxis: {
+                type: chartData.type == 'line' ? 'category' : 'value',
+                axisLabel: {textStyle: {color: 'back'}},
+           
+            axisLine: {
+               
+                lineStyle: {
+                    color: '#c0c0c0'
+                }
+            },
+            data: chartData.xInfo,
+            },
+             yAxis: {
+                type: chartData.type == 'line' ? 'value' : 'category',
+                data: chartData.yInfo,
+
+                axisLine: {
+             
+                    lineStyle: {
+                    color: '#c0c0c0'
+                }
+             },
+        },
+        series: {
+            symbol:'circle',
+            name: chartData.name,
+            animationDuration: 1,
+            type: chartData.type,
+            markLine: {symbolSize: '10',},
+            symbolSize: '15',
+            barWidth:'70%',
+            lineStyle: {normal: {color: '#ff8000'}},
+            label: {normal: {show: true}},
+           
+            itemStyle: {
+                normal: {
+
+                    color: chartData.type == 'line' ? '#ff8000' : function (params) {
+
+                        var colorList = [
+                            '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
+                            '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
+                            '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
+                        ];
+                        return colorList[params.dataIndex]
+                    }
+                }
+            },
+            data: chartData.data,
+        },
+    };
+    
+    return option;
+        };
+    myChart.setOption(initChart(eData));
+    myChart.on('click',function(params){window.postMessage(params.name)});
+
+    `;
+        console.log(this.state.script);
+
+        let HTML = `
+        <!DOCTYPE html>
+        <html style="height: 100%;width:100%">
+        <head>
+        <meta name="viewport"
+          content="target-densitydpi=device-dpi,width=device-width, initial-scale=1, user-scalable=no,minimum-scale=1.0, maximum-scale=1.0"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/3.4.0/echarts.min.js"></script>
+        <meta charset="utf-8">
+        <title>ECharts</title>
+        </head>
+        <body style="height: 100%;width:100%">
+        <div id="chart" style="height: 100%;width:100%;"></div>
+        </body>
+        </html>
+        `;
+        let url;
+        if (__DEV__) {
+            url = require('./QuotaDemo/repaint.html');
+        } else if (__IOS__) {
+            return (
+                <View style={styles.container}>
+                    <WebView
+                        style={{flex: 1}}
+                        source={{html:HTML}}
+                        scalesPageToFit={true}
+                        onMessage={this.onMessage.bind(this)}
+                        injectedJavaScript={script}
+                    />
+                </View>
+            );
+            // url = {uri: 'web/repaint.html'}
+        } else {
+            url = {uri: 'file:///android_asset/web/repaint.html'};
+        }
+        return (
+            <View style={styles.container}>
+                <Text>{this.state.chartData.data}</Text>
+                <WebView
+                    ref={(ref)=>this.web= ref}
+                    style={{flex: 1}}
+                    source={this.state.url}
+                    scalesPageToFit={true}
+                    onMessage={this.onMessage.bind(this)}
+                    injectedJavaScript={script}
+                />
+            </View>
+        );
+    }
+
+    onMessage(e) {
+        let data = e.nativeEvent.data;
+        this.props.navigator.push({
+            component: QuotaDemo2,
+            params: {
+                dataIndex: data
+            }
+        })
+    }
+}
+
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: 'white',
+        flex: 1
+    },
+    topViewStyle: {
+        flexDirection: 'row',
+        height: 40,
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        backgroundColor: '#F7F7F7'
+    }
+});

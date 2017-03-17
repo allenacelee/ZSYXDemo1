@@ -1,0 +1,89 @@
+/**
+ * =========================================================================
+ *
+ * @file Indicator
+ * @description
+ * =========================================================================
+ *
+ * @requires
+ *
+ * @param
+ * @param
+ * @param
+ * =========================================================================
+ *
+ * @example
+ * @todo
+ *
+ * @author linzixiong
+ * @date 2017/3/14
+ * @version 1.0
+ * =========================================================================
+ */
+
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    Text,
+    View,
+    ActivityIndicator,
+    Dimensions,
+    Modal
+} from 'react-native';
+
+const {width} = Dimensions.get("window");
+
+export default class Indicator extends Component {
+
+    static defaultProps = {
+        visible: false,
+        text: '',
+    };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            visible: this.props.visible,
+        }
+    }
+
+    render() {
+        return (
+            <Modal
+                animationType={"fade"}
+                transparent={true}
+                visible={this.props.visible}
+                onRequestClose={()=>{}}
+            >
+                <View style={styles.container}>
+                    <View style={styles.indicatorView}>
+                        <ActivityIndicator
+                            animating={true}
+                            size="large"
+                            color="orange"
+                        />
+                        <Text style={{color: 'white'}}>{this.props.text}</Text>
+                    </View>
+                </View>
+            </Modal>
+        )
+    }
+}
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.0)',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    indicatorView: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: width * 0.4,
+        height: width * 0.4,
+        borderRadius: 5,
+    }
+});

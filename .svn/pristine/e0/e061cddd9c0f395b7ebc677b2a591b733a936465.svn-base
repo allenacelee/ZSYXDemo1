@@ -1,0 +1,117 @@
+/**
+ * =========================================================================
+ *
+ * @file 指标页面下级的Demo
+ * @description
+ * =========================================================================
+ *
+ * @author linzixiong
+ * @date 2016/12/8
+ * @version 1.0
+ * =========================================================================
+ */
+
+
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    View,
+    Button,
+    TouchableOpacity,
+
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Entypo'
+import NavigationBar from '../../Pub/NavigationBar/NavigationBar'
+import ModalDatePicker from '../../Pub/ModalDatePicker/ModalDatePicker'
+import QuotaDemo2 from './QuotaDemo2'
+import Chart from '../Chart'
+import lineData from './lineData.json'
+export default class QuotaDemo1 extends Component {
+    static defaultProps = {
+        quotaData: {
+            createDate: "",
+            menuCatalogId: "",
+            menuCode: "",
+            menuDesc: "",
+            menuId: "",
+            menuName: "",
+            menuUrl: "",
+            menuValue: "",
+            stsDate: ""
+        }
+    };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            dataSource: [],
+            acctDate: ModalDatePicker.calcDate(ModalDatePicker.getCurrentDate(this.props.quotaData.menuDesc == "D" ? "day" : "month"), -1),
+        }
+    }
+
+    render() {
+
+
+        return (
+            <View style={styles.container}>
+                {/*导航条*/}
+                <NavigationBar
+                    title={this.props.quotaData.menuName}
+                    rightButtonIcon="home"
+                    onPressRightIcon={()=>this.props.navigator.popToTop()}
+                    {...this.props}
+                />
+                {/*日期选择*/}
+                <View style={styles.topViewStyle}>
+                    <TouchableOpacity onPress={()=>this.setState({
+                        acctDate: ModalDatePicker.calcDate(this.state.acctDate, -1)
+                    })}>
+                        <Icon name='chevron-left' size={30} color="#999999"/>
+                    </TouchableOpacity>
+                    <ModalDatePicker
+                        type={this.props.quotaData.menuDesc == "D" ? "day" : "month"}
+                        minDate='20150101'
+                        maxDate='20170101'
+                        selectedValue={this.state.acctDate}
+                        callbackPickerValue={(callbackPickerValue)=>this.setState({
+                            acctDate: callbackPickerValue
+                        })}
+                        textStyle={{color: 'orange', fontSize: 20}}
+                    />
+                    <TouchableOpacity onPress={()=>this.setState({
+                        acctDate: ModalDatePicker.calcDate(this.state.acctDate, 1)
+                    })}>
+                        <Icon name='chevron-right' size={30} color="#999999"/>
+                    </TouchableOpacity>
+                </View>
+                <Chart
+                    navigator={this.props.navigator} chartData={lineData}
+                />
+            </View>
+        );
+    }
+
+    onMessage(e) {
+        let data = e.nativeEvent.data;
+        this.props.navigator.push({
+            component: QuotaDemo2,
+            params: {
+                dataIndex: data
+            }
+        })
+    }
+}
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: 'white',
+        flex: 1
+    },
+    topViewStyle: {
+        flexDirection: 'row',
+        height: 40,
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        backgroundColor: '#F7F7F7'
+    }
+});

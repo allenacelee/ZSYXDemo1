@@ -1,0 +1,29 @@
+{
+  "test_auto_check": [
+    {
+      "taskName": "北京海达飞科技有限公司（旧宫一）合作厅",
+      "officeCode": "11b0ra3",
+      "officeAddress": "北京-社区中心分公司北京市大兴区旧宫镇旧宫东街佳和园新区底商"
+    },
+    {
+      "taskName": "北京城兴合顺科技有限公司（南小街二队院）沃厅",
+      "officeCode": "11b1wlh",
+      "officeAddress": "北京市大兴区旧宫镇南小街一队596号"
+    },
+    {
+      "taskName": "北京兴合顺科技有限公司（新建村永华路）合作厅",
+      "officeCode": "11b0vx5",
+      "officeAddress": "北京市大兴区新建村永华路3条2号"
+    },
+    {
+      "taskName": "北京城兴合顺科技有限公司（南小街二队院）沃厅",
+      "officeCode": "11b1wlh",
+      "officeAddress": "北京市大兴区旧宫镇南小街一队596号"
+    },
+    {
+      "taskName": "北京兴合顺科技有限公司（新建村永华路）合作厅",
+      "officeCode": "11b0vx5",
+      "officeAddress": "北京市大兴区新建村永华路3条2号"
+    }
+  ]
+}

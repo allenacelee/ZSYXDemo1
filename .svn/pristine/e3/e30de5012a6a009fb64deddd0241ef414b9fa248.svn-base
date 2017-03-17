@@ -1,0 +1,85 @@
+{
+  "mktList": [
+    {
+      "mktActivityId": "3612",
+      "mktActivityName": "十一促销活动",
+      "physicalName": "中关村石景山园",
+      "sts": "A",
+      "startDate": "2014/12/31",
+      "endDate": "2015/01/09",
+      "imgUrl":"http://dimg04.c-ctrip.com/images/700a0d0000006vx6q76F6_830_410_118.jpg"
+    },
+    {
+      "mktActivityId": "3612",
+      "mktActivityName": "迎元旦，大酬宾",
+      "physicalName": "苹果园六区",
+      "sts": "A",
+      "startDate": "2014/12/31",
+      "endDate": "2015/01/09",
+      "imgUrl":"http://dimg04.c-ctrip.com/images/700n0c000000644sk1CAD_830_410_118.jpg"
+    },
+    {
+      "mktActivityId": "3213",
+      "mktActivityName": "测试cyx",
+      "physicalName": "西井村",
+      "sts": "P",
+      "startDate": "2014/07/15",
+      "endDate": "2014/07/23",
+      "imgUrl":"http://dimg04.c-ctrip.com/images/70010b0000005t368E21A_830_410_118.jpg"
+    },
+    {
+      "mktActivityId": "2411",
+      "mktActivityName": "市场部六一儿童节活动",
+      "physicalName": "西井村",
+      "sts": "A",
+      "startDate": "2014/06/19",
+      "endDate": "2014/07/08",
+      "imgUrl":"http://dimg04.c-ctrip.com/images/70040a0000004jgu19130_830_410_118.jpg"
+    },
+    {
+      "mktActivityId": "1810",
+      "mktActivityName": "京门网格大发展",
+      "physicalName": "石景山区苹果园东口",
+      "sts": "P",
+      "startDate": "2014/06/13",
+      "endDate": "2014/06/30",
+      "imgUrl":"http://dimg04.c-ctrip.com/images/7002080000002z3rj03F9_830_410_118.jpg"
+    },
+    {
+      "mktActivityId": "1226",
+      "mktActivityName": "test1234",
+      "physicalName": "西井村",
+      "sts": "A",
+      "startDate": "2014/06/10",
+      "endDate": "2014/06/21",
+      "imgUrl":""
+    },
+    {
+      "mktActivityId": "1226",
+      "mktActivityName": "test1234",
+      "physicalName": "西井村",
+      "sts": "A",
+      "startDate": "2014/06/10",
+      "endDate": "2014/06/21",
+      "imgUrl":"http://dimg04.c-ctrip.com/images/700q0b0000005rfoqAD86_830_410_118.jpg"
+    },
+    {
+      "mktActivityId": "1226",
+      "mktActivityName": "test1234",
+      "physicalName": "西井村",
+      "sts": "P",
+      "startDate": "2014/06/10",
+      "endDate": "2014/06/21",
+      "imgUrl":"http://dimg04.c-ctrip.com/images/70060b0000005rfm234B3_830_410_118.jpg"
+    },
+    {
+      "mktActivityId": "1226",
+      "mktActivityName": "test1234",
+      "physicalName": "西井村",
+      "sts": "P",
+      "startDate": "2014/06/10",
+      "endDate": "2014/06/21",
+      "imgUrl":"http://dimg04.c-ctrip.com/images/700a0b0000005y61gB70D_830_410_118.jpg"
+    }
+  ]
+}

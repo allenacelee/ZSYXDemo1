@@ -1,0 +1,191 @@
+/**
+ * =========================================================================
+ *
+ * @file CheckTaskQuery
+ * @description 自主巡店功能点入口页面
+ * =========================================================================
+ *
+ * @author linzixiong
+ * @date 2017/3/3
+ * @version 1.0
+ * =========================================================================
+ */
+
+
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    View,
+    Button,
+    TextInput,
+    Dimensions,
+    ListView,
+    Text,
+    TouchableOpacity,
+    DeviceEventEmitter,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+import NavigationBar from '../../../Pub/NavigationBar/NavigationBar';
+import ModalDatePicker from '../../../Pub/ModalDatePicker/ModalDatePicker';
+import ModalDropPicker from '../../../Pub/ModalDropPicker/ModalDropPicker';
+
+import CheckController from '../CheckController';
+
+import CheckTaskQueryComponent from './CheckTaskQueryComponent';
+
+const {width} = Dimensions.get("window");
+
+export default class CheckTaskQuery extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            taskName: "",
+            sortType: "0010",
+            dataSource: [],
+            acctDate: ModalDatePicker.getCurrentDate("day"),
+            createrName: "创建人",
+            modalVisible: false,
+        };
+        this.checkController = new CheckController(this);
+        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2)=>r1 !== r2});
+    }
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <ModalDropPicker
+                    modalVisible={this.state.modalVisible}
+                    selectedValue={this.state.sortType}
+                    labelArray={["按创建时间升序", "按创建时间降序", "按完成时间升序", "按完成时间降序"]}
+                    valueArray={["0010", "0020", "0030", "0040"]}
+                    callbackPickerValue={(callbackPickerValue)=>this.setState({
+                        sortType: callbackPickerValue,
+                        modalVisible: false,
+                    })}
+                />
+                <NavigationBar
+                    title="巡店任务查询"
+                    rightButtonIcon="menu"
+                    onPressRightIcon={()=>this.setState({
+                        modalVisible: true,
+                    })}
+                    {...this.props}
+                />
+                <View style={styles.searchView}>
+                    <TextInput style={styles.searchTextInput}
+                               returnKeyType="done"
+                               underlineColorAndroid="transparent"
+                               placeholder="请输入任务名称"
+                               onChangeText={(taskName)=>this.setState({
+                                   taskName: taskName,
+                               })}
+                    >
+                    </TextInput>
+                    <TouchableOpacity onPress={()=>this.checkController.queryTaskList(this.state.sortType)}>
+                        <Icon name={"search"} size={25} color="orange"/>
+                    </TouchableOpacity>
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                    <TouchableOpacity onPress={()=>this.checkController.checkTaskGoToCreater()}>
+                        <View style={styles.modalPickerView}>
+                            <Text style={styles.modalPickerText}>{this.state.createrName}</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <ModalDatePicker
+                        type='day'
+                        minDate='20170101'
+                        maxDate='20171231'
+                        initTitle="创建时间"
+                        selectedValue={this.state.acctDate}
+                        callbackPickerValue={(callbackPickerValue)=>this.setState({
+                            acctDate: callbackPickerValue,
+                        })}
+                        viewStyle={styles.modalPickerView}
+                        textStyle={styles.modalPickerText}
+                    />
+                </View>
+                <ListView
+                    dataSource={this.ds.cloneWithRows(this.state.dataSource)}
+                    renderRow={this.renderRow.bind(this)}
+                    style={{flex: 1, width: width}}
+                    enableEmptySections={true}
+                />
+            </View>
+        )
+    }
+
+    componentDidMount() {
+        //添加回显监听器
+        this.subscription = DeviceEventEmitter.addListener('createrName', (rowData) => {
+            this.setState({
+                createrName: rowData.staffName,
+            })
+        });
+        this.checkController.queryCheckTaskList(this.state.sortType);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextState.sortType == this.state.sortType && nextState.taskName == this.state.taskName) {
+            return true;
+        } else {//修改查询类型
+            this.checkController.queryCheckTaskList(nextState.sortType);
+            return true;
+        }
+    }
+
+    componentWillUnmount() {
+        //移除监听事件
+        this.subscription.remove();
+    };
+
+    renderRow(rowData, sectionID, rowID) {
+        return (
+            <TouchableOpacity onPress={()=>this.checkController.goToCheck(rowData, false)}>
+                <CheckTaskQueryComponent
+                    rowData={rowData}
+                />
+            </TouchableOpacity>
+        )
+    }
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'white',
+        alignItems: 'center',
+    },
+    searchView: {
+        flexDirection: 'row',
+        borderWidth: 1,
+        borderColor: "#E7E7E7",
+        width: width * 0.95,
+        height: 40,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 5,
+        marginVertical: 10,
+    },
+    searchTextInput: {
+        width: width * 0.8,
+        color: '#666',
+    },
+    modalPickerView: {
+        backgroundColor: '#F7F7F7',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: width / 2,
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        borderRightWidth: 1,
+        borderColor: '#E7E7E7',
+        paddingVertical: 5,
+        height: 40,
+    },
+    modalPickerText: {
+        fontSize: 15,
+        color: '#666'
+    }
+});

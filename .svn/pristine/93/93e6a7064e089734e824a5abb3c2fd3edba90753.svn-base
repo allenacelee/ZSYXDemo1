@@ -1,0 +1,201 @@
+/**
+ * =========================================================================
+ *
+ * @file QuotaController
+ * @description 请在每个页面中的constructor()方法里实例化一个当前controller，逻辑类型方法全部放在controller中
+ * =========================================================================
+ *
+ * @param funcExample()     //示例方法
+ * =========================================================================
+ *
+ * @example 页面constructor()中实例化：
+ *                          constructor(props) {
+ *                              super(props);
+ *                              this.quotaController = new QuotaController(this);
+ *                          }
+ *          页面中调用：this.quotaController.initStorage();
+ *
+ * @author linzixiong
+ * @date 2017/1/4
+ * @version 1.0
+ * =========================================================================
+ */
+import {AsyncStorage} from 'react-native';
+import Storage from 'react-native-storage';
+import CommunicateService from '../System/Service/CommunicateService'
+import QuotaDemo1 from "./QuotaDemo/QuotaDemo1"
+export default class QuotaController {
+    constructor(that) {
+        //定义that表示页面的this，可用this.that.state等方式调用页面内容
+        this.that = that;
+    }
+
+    /**
+     * 示例方法
+     */
+    funcExample() {
+        //设置页面state
+        this.that.setState({
+            name: 'newName'
+        });
+        //进行页面跳转(循环跳转到自己)
+        this.that.props.navigator.push({
+            component: this.that
+        })
+    }
+
+    /**
+     * 进入指标页面
+     * @param quotaData
+     */
+    onPressQuotaItem(quotaData) {
+        this.that.props.navigator.push({
+            component: QuotaDemo1,
+            params: {
+                quotaData: quotaData,
+            }
+        })
+    }
+
+    queryIndexDataList() {
+        //加载遮罩层
+        this.that.setState({
+            modalVisible: true,
+        });
+        storage.getBatchData([
+            {key: 'permissionAreaId', id: userId},
+            {key: 'areaType', id: userId}]).then(result=> {
+            let content = {
+                indexCode: this.that.props.quotaData.menuCode,  //访问的指标编号
+                areaId: result[0], //当前登录人的数据权限区域
+                areaType: result[1],	  //当前登录人的数据权限区域类型
+                billingCycle: this.that.state.acctDate  // 查询账期，日指标为日期，月指标为月份
+            };
+            CommunicateService.communicate('appIndexDataDateService', 'queryIndexDataList', content)
+                .then((msg)=> {
+                    let data = new Object();
+                    data.title = msg.title;
+                    data.type = "line";
+                    data.xInfo = msg.xInfo;
+                    data.name = msg.name;
+                    data.data = msg.data;
+                    data.areaType = content.areaType;
+                    this.that.setState({
+                        chartData: data,
+                        modalVisible: false,
+                    })
+                })
+                .catch((error)=> {
+                    console.error(error);
+                })
+        });
+        //构造网络连接数据
+    }
+
+    queryDrillDownNextDataList() {
+        //加载遮罩层
+        this.that.setState({
+            modalVisible: true,
+        });
+        storage.load({key: 'areaType', id: userId}).then(areaType=> {
+            let content = {
+                indexCode: this.that.props.quotaData.menuCode,  //访问的指标编号
+                areaId: this.that.props.areaId, //当前登录人的数据权限区域
+                areaType: this.that.props.areaType,	  //当前登录人的数据权限区域类型
+                billingCycle: this.that.state.acctDate  // 查询账期，日指标为日期，月指标为月份
+            };
+            CommunicateService.communicate('appIndexDataDateService', 'queryXiazuanIndexDataList', content)
+                .then((msg)=> {
+                    let areaId = [];
+                    let data = new Object();
+                    data.title = '';
+                    data.type = "bar";
+                    data.data = [];
+                    data.yInfo = [];
+                    data.areaId = [];
+                    data.areaType = msg.data[0].areaType;
+                    let listData = {};
+                    let dataOption;
+                    for (o in msg.data) {
+                        data.yInfo.push(msg.data[o].text);
+                        data.data.push(msg.data[o].value);
+                        data.areaId.push(msg.data[o].id);
+                        areaId.push(msg.data[o].id);
+                        dataOption = {
+                            'text': msg.data[o].text,
+                            'value': msg.data[o].value,
+                            'last': msg.data[o].last,
+                            'sum': msg.data[o].sum,
+                        };
+                        listData[o] = dataOption;
+                    }
+                    this.that.setState({
+                        areaId: areaId,
+                        chartData: data,
+                        modalVisible: false,
+                        dataSource: this.that.state.dataSource.cloneWithRows(listData)
+                    })
+                })
+                .catch((error)=> {
+                    console.error(error);
+                })
+        })
+    }
+
+    /*第一次下钻网络数据请求*/
+    queryDrillDownIndexDataList() {
+        //加载遮罩层
+        this.that.setState({
+            modalVisible: true,
+        });
+        storage.getBatchData([
+            {key: 'permissionAreaId', id: userId},
+            {key: 'areaType', id: userId}]).then(result=> {
+            let content = {
+                indexCode: this.that.props.quotaData.menuCode,  //访问的指标编号
+                areaId: result[0], //当前登录人的数据权限区域
+                areaType: result[1],	  //当前登录人的数据权限区域类型
+                billingCycle: this.that.state.acctDate  // 查询账期，日指标为日期，月指标为月份
+            };
+            CommunicateService.communicate('appIndexDataDateService', 'queryXiazuanIndexDataList', content)
+                .then((msg)=> {
+
+                    let areaId = [];
+                    let data = new Object();
+                    data.title = '';
+                    data.type = "bar";
+                    data.data = [];
+                    data.yInfo = [];
+                    data.areaId = [];
+                    data.areaType = msg.data[0].areaType;
+                    let listData = {};
+                    let dataOption;
+                    for (o in msg.data) {
+                        data.yInfo.push(msg.data[o].text);
+                        data.data.push(msg.data[o].value);
+                        data.areaId.push(msg.data[o].id);
+                        areaId.push(msg.data[o].id);
+                        dataOption = {
+                            'text': msg.data[o].text,
+                            'value': msg.data[o].value,
+                            'last': msg.data[o].last,
+                            'sum': msg.data[o].sum,
+                            'areaId': msg.data[o].id
+                        };
+                        listData[o] = dataOption;
+                    }
+                    this.that.setState({
+                        areaId: areaId,
+                        chartData: data,
+                        modalVisible: false,
+                        dataSource: this.that.state.dataSource.cloneWithRows(listData)
+                    })
+                })
+                .catch((error)=> {
+                    console.error(error);
+                })
+        })
+    }
+
+
+}

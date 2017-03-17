@@ -1,0 +1,246 @@
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    Text,
+    View,
+    TouchableOpacity,
+    Image,
+    TextInput,
+    ActivityIndicator,
+    ScrollView,
+    Modal
+} from 'react-native';
+
+import MainController from './MainController'
+export default  class LoginPage extends React.Component {
+
+    static defaultProps = {
+        isRememberUserName: false,
+        rememberUserName: '',
+    };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            isRememberUserName: this.props.isRememberUserName,
+            userName: this.props.rememberUserName,
+            userPassword: '',
+            modalVisible: false,
+            animating: false,
+        };
+        this.mainController = new MainController(this);
+    };
+
+    render() {
+        return (
+            <View>
+                <ScrollView>
+                <Modal
+                    animationType={"fade"}
+                    transparent={true}
+                    visible={this.state.modalVisible}
+                    onRequestClose={()=>this.mainController.cancelLogin()}
+                >
+                    <View style={{
+                        flex: 1,
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+                        <ActivityIndicator
+                            animating={true}
+                            size="large"
+                        />
+                    </View>
+                </Modal>
+                {/*** 登陆页上部视图 ***/}
+                <View style={styles.loginStyle}>
+                    <Image style={styles.LoginImgStyle} source={require('../Img/img/login_img.png')}/>
+                    <Text style={styles.userTypeStyle}>普通用户登陆</Text>
+                </View>
+                {/** 登陆页下部视图 **/}
+                <View style={styles.bottomxStyle}>
+                    <View style={styles.userNameViewStyle}>{/*** 用户名视图 ***/}
+                        <Image style={styles.userNameIconStyle} source={require('../Img/img/login_user_name_img.png')}/>
+                        <TextInput
+                            style={styles.userNameInputStyle}
+                            underlineColorAndroid='transparent'
+                            onChange={(event) => this.setState({userName: event.nativeEvent.text})}
+                            value={this.state.userName}
+                        >
+                        </TextInput>
+                    </View>
+                    {/** 下划线 **/}
+                    <View style={{
+                        width: ScreenWidth - 80,
+                        height: 1,
+                        backgroundColor: 'orange',
+                        marginLeft: 40,
+                        marginTop: 2
+                    }}/>
+                    <View style={styles.passWordViewStyle}>{/** 密码视图 **/}
+                        <Image style={styles.userNameIconStyle}
+                               source={require('../Img/img/login_user_password_img.png')}/>
+                        <TextInput
+                            style={styles.passWoreInputStyle} passWord="true"
+                            underlineColorAndroid='transparent'
+                            secureTextEntry={true}
+                            onChange={(event) => this.setState({userPassword: event.nativeEvent.text})}
+                        >
+                        </TextInput>
+                    </View>
+                    {/** 下划线 **/}
+                    <View style={{
+                        width: ScreenWidth - 80,
+                        height: 1,
+                        backgroundColor: 'orange',
+                        marginLeft: 40,
+                        marginTop: 2
+                    }}/>
+                    {/** 记住密码 **/}
+                    {this.state.isRememberUserName === false
+                        ?
+                        (<TouchableOpacity onPress={()=> {
+                            this.clickOnRememberUserName()
+                        }}>
+                            <View style={styles.rememberUserStyle}>
+                                <Image style={styles.rememberUserImageStyle}
+                                       source={require('../Img/img/all_task_list_filter_checkbox_normal@2x.png')}/>
+                                <Text style={{color: 'orange'}}> 记住用户 </Text></View>
+                        </TouchableOpacity>)
+                        :
+                        (
+                            <TouchableOpacity onPress={()=> {
+                                this.clickOnRememberUserName()
+                            }}>
+                                <View style={styles.rememberUserStyle}>
+                                    <Image style={styles.rememberUserImageStyle}
+                                           source={require('../Img/img/all_task_list_filter_checkbox_checked@2x.png')}/>
+                                    <Text style={{color: 'orange'}}> 记住用户 </Text>
+                                </View>
+                            </TouchableOpacity>
+                        )}
+                    <TouchableOpacity onPress={this.pushMethod.bind(this)}>
+                        <View style={styles.loginButtonStyle}>
+                            <Text style={{color: 'white'}}>登陆</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+             </ScrollView>
+            </View>
+        );
+    }
+
+    pushMethod() {
+
+        //todo 增加indicator
+        //登录
+        //this.mainController.doLogin();//服务器登录 用户名：admin 密码：Aa123456
+        this.mainController.doLoginOffline();//离线登录
+    }
+
+    clickOnRememberUserName() {
+        this.setState({
+            isRememberUserName: !this.state.isRememberUserName,
+        });
+    }
+}
+var Dimensions = require('Dimensions');
+var ScreenWidth = Dimensions.get('window').width;
+var ScreenHeight = Dimensions.get('window').height;
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white',
+    },
+    welcome: {
+        fontSize: 20,
+        textAlign: 'center',
+        margin: 10,
+    },
+    LoginImgStyle: {
+        width: 90,
+        height: 90,
+        marginLeft: (ScreenWidth - 90) / 2,
+        marginTop: 50,
+    },
+    userTypeStyle: {
+        fontSize: 20,
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20,
+        color: 'orange',
+    },
+    loginStyle: {
+        width: ScreenWidth,
+        height: ScreenHeight * 0.35,
+        backgroundColor: 'rgba(255, 255, 255, 1.0)',
+    },
+    bottomStyle: {
+        width: ScreenWidth,
+        height: ScreenHeight * 0.65,
+        backgroundColor: 'rgba(251, 251, 240, 1.0)',
+
+    },
+    userNameViewStyle: {
+        flexDirection: 'row',
+        width: ScreenWidth,
+        height: 35,
+        marginTop: 20,
+        //backgroundColor:'blue',
+    },
+    passWordViewStyle: {
+        flexDirection: 'row',
+        width: ScreenWidth,
+        height: 35,
+        //backgroundColor:'blue',
+        marginTop: 10,
+    },
+    userNameInputStyle: {
+        marginLeft: 5,
+        width: ScreenWidth - 150,
+        height: 35,
+        color: 'black',
+    },
+    passWoreInputStyle: {
+        marginLeft: 5,
+        width: ScreenWidth - 150,
+        height: 35,
+        color: 'black',
+    },
+    userNameIconStyle: {
+        marginLeft: 40,
+        width: 30,
+        height: 30,
+    },
+    rememberUserStyle: {
+        flexDirection: 'row',
+        width: 100,
+        height: 30,
+        //backgroundColor:'gray',
+        marginLeft: 35,
+        marginTop: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        //opacity:0.0,
+    },
+    rememberUserImageStyle: {
+        width: 25,
+        height: 25,
+    },
+    loginButtonStyle: {
+        marginLeft: 40,
+        width: ScreenWidth - 80,
+        height: 44,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'orange',
+        marginTop: 10,
+        borderRadius: 4,
+    },
+});
+

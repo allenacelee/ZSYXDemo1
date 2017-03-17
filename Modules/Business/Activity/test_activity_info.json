@@ -1,0 +1,36 @@
+{
+  "mktActivityName": "十一促销活动",
+  "mktActivityTheme": "联通4G推广“逆天”行动",
+  "activitySlogan": "联通4G逆天大升级",
+  "ourParticipants": "各营业厅员工及市场部相关工作人员",
+  "startDate": "2014年10月01日",
+  "endDate": "2014年10月13日",
+  "mktExecContent": [
+    {
+      "recordDate": "10月2号",
+      "mktExecContent": "活动场面热烈，当天截止上午12点40分，已经完成了102个用户的4G升级。其中有47人选择了本地版、33人选择了共享版、32人选择了全国版",
+      "image": [
+        "http://www.hbgl.com.cn/uploadfile/2014/0503/1061129.jpg",
+        "http://www.hbgl.com.cn/uploadfile/2014/0503/1061126.jpg",
+        "http://www.hbgl.com.cn/uploadfile/2014/0503/1061115.jpg",
+        "http://www.hbgl.com.cn/uploadfile/2014/0503/1061127.jpg"
+      ]
+    },
+    {
+      "recordDate": "10月5号",
+      "mktExecContent": "很多人对4G共享组合套餐感兴趣，并且人情咨询如何添加共享成员，营业员及咨询人员通过宣传单个实际操作热情的讲解。截止下午3点已有178人选择了4G升级套餐",
+      "image": [
+        "http://www.hbgl.com.cn/uploadfile/2014/0503/1061119.jpg",
+        "http://www.hbgl.com.cn/uploadfile/2014/0503/1061124.jpg"
+      ]
+    },
+    {
+      "recordDate": "10月8号",
+      "mktExecContent": "并且人情咨询如何添加共享成员，很多人对4G共享组合套餐感兴趣，截止下午3点已有178人选择了4G升级套餐,营业员及咨询人员通过宣传单个实际操作热情的讲解。",
+      "image": [
+        "http://www.hbgl.com.cn/uploadfile/2014/0503/1061127.jpg"
+      ]
+    }
+  ]
+}
+

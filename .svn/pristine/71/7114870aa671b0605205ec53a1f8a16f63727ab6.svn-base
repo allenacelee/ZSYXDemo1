@@ -1,0 +1,53 @@
+/**
+ * =========================================================================
+ *
+ * @file 常量包
+ * @description 服务中用到的常量集，使用 "ConstantService.常量名" 的方式获得对应常量
+ * =========================================================================
+ *
+ * @param static URL                        //地址
+ * @param static CLIENT_VERSION             //客户端版本地址
+ * @param static ENC_KEY                    //DES3加密 KEY
+ * @param static ENC_IV                     //DES3加密 IV
+ * @param static HOME                       //HOME名称
+ * @param static QUOTA                      //QUOTA名称
+ * @param static REPORT                     //REPORT名称
+ * @param static MORE                       //MORE名称
+ * @param static LINE_CHART                 //LINE_CHART名称
+ * @param static COLUMN_CHART               //COLUMN_CHART名称
+ * @param static LIST                       //LIST名称
+ * @param static QUOTA_D_IMG                //日指标图标
+ * @param static QUOTA_M_IMG                //月指标图标
+ * @param static QUOTA_DEFAULT_VALUE        //指标默认值
+ * @param static QUOTA_DEFAULT_NAME         //指标默认名称
+ * @param static QUOTA_COLOR_ARRAY          //指标颜色数组
+ * =========================================================================
+ *
+ * @author linzixiong
+ * @date 2016/12/14
+ * @version 1.0
+ * =========================================================================
+ */
+
+export default class ConstantService {
+    //static URL= 'http://202.96.18.102:9631/grid-app/webservice/jaxrs/mobileService/execute';//服务器地址
+     static URL= 'http://192.168.105.121:8080/grid-app/webservice/jaxrs/mobileService/execute';//苹果台式机服务器地址 guest无线连接
+    //static URL = 'http://10.0.2.2:8080/grid-app/webservice/jaxrs/mobileService/execute';//本地地址
+
+    static CLIENT_VERSION = 'RELEASE-1.2.0';
+    static ENC_KEY = '1!QAZ2@WSXCDE#3$4RFVBGT%5^6YHNMJU7&8*IK<.LO9(0P';
+    static ENC_IV = '12481632';
+    static HOME = '掌上营销';
+    static QUOTA = '指标';
+    static REPORT = '报表';
+    static MORE = '更多';
+    static LINE_CHART = '折线图dd';
+    static COLUMN_CHART = '柱状图';
+    static LIST = '列表图';
+    static QUOTA_D_IMG = 'img/quota_day.png';
+    static QUOTA_M_IMG = 'img/quota_month.png';
+    static QUOTA_DEFAULT_VALUE = '0';
+    static QUOTA_DEFAULT_NAME = '未知指标';
+    static QUOTA_COLOR_ARRAY = ['#A7CF5D', '#FFAF24', '#EC5409', '#5AC8E3', '#6BD189', '#5B8EDD', '#D063B6', '#442A78'];
+}
+

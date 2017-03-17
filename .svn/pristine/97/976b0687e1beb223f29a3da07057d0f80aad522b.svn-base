@@ -1,0 +1,21 @@
+{
+  "name": "销售额",
+  "type": "bar",
+  "title": "北京近7日势图",
+  "tabHeadData":[
+    "营销单元","今日值","昨日值","累计值"
+  ],
+  "data": [
+    {"name":"yi区","curValue":"000","preValue":"14","totalValue":"234"},
+    {"name":"三区","curValue":"125","preValue":"13","totalValue":"212"},
+    {"name":"通州","curValue":"113","preValue":"14","totalValue":"199"},
+    {"name":"昌平","curValue":"126","preValue":"14","totalValue":"183"},
+    {"name":"五区","curValue":"134","preValue":"14","totalValue":"198"},
+    {"name":"六区","curValue":"131","preValue":"14","totalValue":"233"},
+    {"name":"大兴","curValue":"123","preValue":"14","totalValue":"234"},
+    {"name":"顺义","curValue":"155","preValue":"13","totalValue":"215"},
+    {"name":"密云","curValue":"133","preValue":"14","totalValue":"210"}
+
+  ]
+
+}

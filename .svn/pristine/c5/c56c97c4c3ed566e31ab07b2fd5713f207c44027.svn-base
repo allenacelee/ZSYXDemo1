@@ -1,0 +1,192 @@
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    View,
+    TouchableOpacity,
+    Dimensions,
+    Image,
+    TouchableWithoutFeedback,
+    ScrollView,
+} from 'react-native';
+
+import Icon from 'react-native-vector-icons/Entypo';
+import ImagePicker from 'react-native-image-picker';
+
+const Width = Dimensions.get("window").width;
+const Height = Dimensions.get("window").height;
+
+// 图片资源数组
+let ImgSourceArray = [];
+let ShowImgNums;
+export default class ImageUpdate extends Component {
+
+    static defaultProps = {
+        ShowImgNums: 5,
+        PreviewImageMethod: null
+    };
+    // 构造
+    constructor(props) {
+        super(props);
+        // 初始状态
+        this.state = {
+            avatarSource: null,
+            SelectedPhoto: null
+        };
+    }
+
+    // 点击删除照片
+    removePicMethod(i) {
+        //alert(i);
+        {/* 删除数组中指定下表的元素 i为需要删除元素的位置 1为需要删除的长度 */
+        }
+        ImgSourceArray.splice(i, 1);
+        this.setState({
+            SelectedPhoto: 'refs'
+        })
+    }
+
+    selectPhotoTapped() {
+        if (ImgSourceArray.length == this.props.ShowImgNums) return;
+        const options = {
+            quality: 1.0,
+            maxWidth: 500,
+            maxHeight: 500,
+            takePhotoButtonTitle: '拍照',
+            chooseFromLibraryButtonTitle: '从相册选取',
+            cancelButtonTitle: '取消',
+            title: '选择照片',
+            storageOptions: {
+                skipBackup: true
+            }
+        };
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+
+            if (response.didCancel) { // 取消
+                console.log('User cancelled photo picker');
+            }
+            else if (response.error) {/* 出错 */
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+                {/* 选定照片后执行此分支 */
+                }
+                let source;
+                // You can display the image using either:
+                //source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
+
+                //Or:
+                if (__ANDROID__) {
+                    source = {uri: response.uri, isStatic: true};
+                } else {
+                    source = {uri: response.uri.replace('file://', ''), isStatic: true};
+                }
+
+                // 添加选中的图片资源
+                ImgSourceArray.push(source);
+
+                this.setState({
+                    avatarSource: source
+                });
+            }
+        });
+    }
+
+    render() {
+        return (
+            <View
+                style={[styles.container, {height: (Width - (this.props.ShowImgNums + 1) * 10) / this.props.ShowImgNums + 10}]}
+                //horizontal={true}
+            >
+                {this.renderImageMethod()}
+                <View style={[styles.avatar, {
+                    width: (Width - (this.props.ShowImgNums + 1) * 10) / this.props.ShowImgNums,
+                    height: (Width - (this.props.ShowImgNums + 1) * 10) / this.props.ShowImgNums
+                }]}>
+                    {/*<Text>{'添加照片'}</Text>*/}
+                    {/*<Image style={{width:(Width - (this.props.ShowImgNums + 1) * 10) / this.props.ShowImgNums,*/}
+                    {/*height:(Width - (this.props.ShowImgNums + 1) * 10) / this.props.ShowImgNums}}*/}
+                    {/*source={require('../../Img/img/addImage.png')}*/}
+                    {/*/>*/}
+                    <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+                        <Icon name='camera' color='#999' size={40}/>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        )
+    }
+
+    componentWillUnmount() {
+        //退出时清空数组
+        ImgSourceArray = [];
+    }
+
+    renderImageMethod() {
+        let TempArray = [];
+        for (let i = 0; i < ImgSourceArray.length; i++) {
+            TempArray.push(
+                <TouchableOpacity onPress={this.clickOnItem.bind(this, ImgSourceArray, i)} key={i}>
+                    <Image style={[styles.ImgStyle, {
+                        width: (Width - (this.props.ShowImgNums + 1) * 10) / this.props.ShowImgNums,
+                        height: (Width - (this.props.ShowImgNums + 1) * 10) / this.props.ShowImgNums
+                    }]} source={ImgSourceArray[i]} key={i}>
+                        {/* 删除图片的按钮 */}{/* 此处传值 需要将 this 也传到removePicMethod此方法中*/}
+                        <TouchableWithoutFeedback style={styles.removeImgStyle}
+                                                  onPress={this.removePicMethod.bind(this, i)}>
+                            <View style={styles.removeImgStyle}>
+                                <Icon name='cross' size={15} color='white'/>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </Image>
+                </TouchableOpacity>
+            )
+        }
+        return TempArray;
+    }
+
+    // 点击图片 进行预览
+    clickOnItem(imageSourceArray, index) {
+        this.props.PreviewImageMethod(imageSourceArray, index);
+    }
+}
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'white', //#F5FCFF
+        height: (Width - (ShowImgNums + 1) * 10) / ShowImgNums,
+        // marginTop: 100,
+        width: Width ,
+    },
+    avatar: {
+        width: (Width - (ShowImgNums + 1) * 10) / ShowImgNums,
+        height: (Width - (ShowImgNums + 1) * 10) / ShowImgNums,
+        marginLeft: 10,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 2,
+        borderStyle: 'dashed',
+        borderColor: '#999',
+        backgroundColor: '#F6F6F6'
+    },
+    ImgStyle: {
+        width: (Width - (ShowImgNums + 1) * 10) / ShowImgNums,
+        height: (Width - (ShowImgNums + 1) * 10) / ShowImgNums,
+        marginLeft: 10
+    },
+    removeImgStyle: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        width: 20,
+        height: 20,
+        backgroundColor: '#999',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
+});

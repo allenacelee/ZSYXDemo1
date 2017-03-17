@@ -1,0 +1,74 @@
+{
+  "test_work_query_A": [
+    {
+      "state": "A",
+      "createTime": "2017-03-03",
+      "name": "检查实名信息保护公章"
+    },
+    {
+      "state": "A",
+      "createTime": "2017-03-03",
+      "name": "检查实名信息保护公章"
+    },
+    {
+      "state": "A",
+      "createTime": "2017-03-03",
+      "name": "核实信息保护印章信息"
+    },
+    {
+      "state": "A",
+      "createTime": "2017-03-03",
+      "name": "核实信息保护印章信息"
+    },
+    {
+      "state": "A",
+      "createTime": "2017-03-03",
+      "name": "检查实名信息保护公章"
+    },
+    {
+      "state": "A",
+      "createTime": "2017-03-03",
+      "name": "巡店任务"
+    },
+    {
+      "state": "A",
+      "createTime": "2017-03-03",
+      "name": "巡店任务"
+    },
+    {
+      "state": "A",
+      "createTime": "2017-03-03",
+      "name": "巡店任务"
+    },
+    {
+      "state": "A",
+      "createTime": "2017-03-03",
+      "name": "检查实名信息保护公章"
+    },
+    {
+      "state": "A",
+      "createTime": "2017-03-03",
+      "name": "巡店任务"
+    },
+    {
+      "state": "A",
+      "createTime": "2017-03-03",
+      "name": "检查实名信息保护公章"
+    },
+    {
+      "state": "A",
+      "createTime": "2017-03-03",
+      "name": "核实信息保护印章信息"
+    },
+    {
+      "state": "A",
+      "createTime": "2017-03-03",
+      "name": "驻店销售"
+    },
+    {
+      "state": "A",
+      "createTime": "2017-03-03",
+      "name": "驻店销售"
+    }
+  ]
+}

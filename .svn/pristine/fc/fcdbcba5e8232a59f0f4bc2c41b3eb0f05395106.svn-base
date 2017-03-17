@@ -1,0 +1,233 @@
+/**
+ * =========================================================================
+ *
+ * @file HomeController
+ * @description 请在每个页面中的constructor()方法里实例化一个当前controller，逻辑类型方法全部放在controller中
+ * =========================================================================
+ *
+ * @param funcExample()     //示例方法
+ * =========================================================================
+ *
+ * @example 页面constructor()中实例化：
+ *                          constructor(props) {
+ *                              super(props);
+ *                              this.homeController = new HomeController(this);
+ *                          }
+ *          页面中调用：this.homeController.initStorage();
+ *
+ * @author linzixiong
+ * @date 2017/1/4
+ * @version 1.0
+ * =========================================================================
+ */
+
+
+//工具类导入
+import CommunicateService from '../System/Service/CommunicateService'
+
+//页面导入
+import ContinueFollowing from './ContinueFollowing/ContinueFollowingPage'
+import Activity from '../Business/Activity/Activity'
+import ReturnVisitListView from '../Business/ReturnVisit/ReturnVisitListView'
+import Check from '../Business/Check/Check'
+import Decorate from '../Business/Decorate/Decorate'
+import UserCardPage from './UserCard/UserCardPage'
+var UserCardArray = [];
+var loadPage = 0;
+export default class HomeController {
+    constructor(that) {
+        //定义that表示页面的this，可用this.that.state等方式调用页面内容
+        this.that = that;
+
+    }
+    /**
+     * 示例方法
+     */
+    funcExample() {
+        //设置页面state
+        this.that.setState({
+            name: 'newName'
+        });
+        //进行页面跳转(循环跳转到自己)
+        this.that.props.navigator.push({
+            component: this.that
+        })
+    }
+
+    /**
+     * 首页上部菜单点击跳转页面方法
+     * @param menuCode
+     */
+    topMenuClick(menuCode) {
+        let Component;
+        switch (menuCode) {
+            case 'xudun':
+                Component = ContinueFollowing;
+                break;
+            case 'yonghukapian':
+                Component = UserCardPage;
+                break;
+            case 'huifang':
+                Component = ReturnVisitListView;
+                break;
+            case 'huodong':
+                Component = Activity;
+                break;
+            case 'xundian':
+                Component = Check;
+                break;
+            case 'zhuangxiu':
+                Component = Decorate;
+                break;
+        }
+        this.that.props.navigator.push({
+            component: Component
+        })
+    }
+
+    //续趸模块 小区列表数据请求
+    getData(timeString) {
+        //加载遮罩层
+        this.that.setState({
+            modalVisible: true,
+        });
+        storage.load({key: 'staffId', id: userId}).then(staffId=> {
+            //构造网络连接数据
+            let contentUser = {
+                staffId: staffId,
+                expMonth: timeString
+            };
+            //网络连接进行登录
+            CommunicateService.communicate('gridBundleInfoService', 'queryPhysicalGridBundleInfo', contentUser)
+                .then((msg)=> {
+                    console.log(msg.dataList);
+                    if (!msg.return_code || msg.return_code == undefined) {
+                        //数据请求成功
+                        console.log(msg);
+                        //解除遮罩层
+                        this.that.setState({
+                            modalVisible: false,
+                            dataArray: msg.dataList
+                        });
+                    } else {
+                        //数据请求失败
+                        //解除遮罩层
+                        this.that.setState({
+                            modalVisible: false,
+                        });
+                        console.log(msg);
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                    alert(error);
+                });
+        });
+    }
+
+    //续趸模块 楼宇列表数据请求
+    /*
+     *  timeString 账期
+     *  gridId     网格ID
+     */
+    getBuildingListData(timeString, gridId) {
+
+        //加载遮罩层
+        this.that.setState({
+            modalVisible: true,
+        });
+        //入参
+        let contentUser = {
+            wangeId: gridId,
+            expMonth: timeString
+        };
+        //构造网络连接数据
+        //网络连接进行登录
+        CommunicateService.communicate('gridBundleInfoService', 'queryBundleBuildingInfo', contentUser)
+            .then((msg)=> {
+                console.log(msg.dataList);
+                if (!msg.return_code || msg.return_code == undefined) {
+                    //数据请求成功
+                    console.log(msg);
+                    //解除遮罩层
+                    this.that.setState({
+                        modalVisible: false,
+                        dataArray: msg.dataList
+                    });
+                } else {
+                    //数据请求失败
+                    //解除遮罩层
+                    this.that.setState({
+                        modalVisible: false,
+                    });
+                    console.log(msg);
+                }
+            })
+    }
+
+    //用户卡片模块 数据请求
+    //isFirstLoad 是否是首次加载
+    getUserCardData(page, isFirstLoad) {
+        if (isFirstLoad == true) {
+            //加载遮罩层
+            this.that.setState({
+                modalVisible: true,
+            });
+            page = 0;
+        }
+        //如果是请求第一页的数据 清空数组
+        if (page === 0) {
+            UserCardArray.splice(0, UserCardArray.length)
+        }
+
+        storage.load({key: 'permissionAreaId', id: userId}).then(dgridId=> {
+            //构造网络连接数据
+            let contentUser = {
+                dgridId: '112592',
+                keys: page
+            };
+            //网络连接进行登录
+            CommunicateService.communicate('btUserInfoDayService', 'queryBtUserInfoDayList', contentUser)
+                .then((msg)=> {
+                    if (msg.isSuccess || msg.isSuccess == 0) {
+                        //数据请求失败
+                        //解除遮罩层
+                        this.that.setState({
+                            modalVisible: false,
+                            isRefreshing:false
+                        });
+                    } else {
+                        //数据请求成功
+                        console.log(msg);
+                        //解除遮罩层
+                        for (var i = 0; i < msg.length; i++) {
+                            UserCardArray.push(msg[i])
+                            console.log(msg.i)
+                        }
+                        console.log(UserCardArray);
+                        this.that.setState({
+                            modalVisible: false,
+                            dataArray: UserCardArray,
+                            isRefreshing:false,
+                            pages:this.that.state.pages++,
+                            dataCount:msg.length
+                        });
+
+                        loadPage++;
+                        console.log(loadPage);
+
+                    }
+
+                })
+                .catch((error) => {
+                    console.error(error);
+                    //alert(error);
+                    this.that.setState({
+                        modalVisible: false,
+                        isRefreshing:false
+                    });
+                });
+        });
+    }
+
+}
