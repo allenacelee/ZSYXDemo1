@@ -28,7 +28,7 @@ import CommunicateService from '../System/Service/CommunicateService'
 //页面导入
 import ContinueFollowing from './ContinueFollowing/ContinueFollowingPage'
 import Activity from '../Business/Activity/Activity'
-//import ReturnVisit from '../Business/ReturnVisit/ReturnVisit'
+import ReturnVisit from '../Business/ReturnVisit/ReturnVisitListView'
 import Check from '../Business/Check/Check'
 import Decorate from '../Business/Decorate/Decorate'
 import UserCardPage from './UserCard/UserCardPage'
@@ -68,7 +68,7 @@ export default class HomeController {
                 Component = UserCardPage;
                 break;
             case 'huifang':
-                //Component = ReturnVisit;
+                Component = ReturnVisit;
                 break;
             case 'huodong':
                 Component = Activity;
