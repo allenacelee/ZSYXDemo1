@@ -1,0 +1,60 @@
+/**
+ * =========================================================================
+ *
+ * @file StoreLocationCheck
+ * @description 门店位置采集审核功能点入口页面
+ * =========================================================================
+ *
+ * @author linzixiong
+ * @date 2017/3/20
+ * @version 1.0
+ * =========================================================================
+ */
+
+
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    View,
+    TextInput,
+    Dimensions,
+    ListView,
+    TouchableOpacity,
+} from 'react-native';
+
+import NavigationBar from '../../../Pub/NavigationBar/NavigationBar';
+
+import StoreController from '../StoreController';
+
+const {width} = Dimensions.get("window");
+export default class StoreLocationCheck extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            dataSource: [],
+            taskName: "",
+        };
+        this.storeController = new StoreController(this);
+        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2)=>r1 !== r2});
+    }
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <NavigationBar
+                    title="门店位置采集审核"
+                    {...this.props}
+                />
+            </View>
+        )
+    }
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'white',
+        alignItems: 'center',
+    },
+});

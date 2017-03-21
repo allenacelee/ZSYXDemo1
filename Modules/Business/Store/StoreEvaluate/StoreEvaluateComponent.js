@@ -1,0 +1,122 @@
+/**
+ * =========================================================================
+ *
+ * @file StoreEvaluateComponent
+ * @description 门店评级公共组件
+ * =========================================================================
+ *
+ * @author liana
+ * @date 2017/3/20
+ * @version 1.0
+ * =========================================================================
+ */
+import React, {Component} from 'react'
+import {
+    View,
+    Text,
+    StyleSheet,
+    Dimensions,
+    Image,
+} from 'react-native';
+const width = Dimensions.get('window').width;           //获取屏幕宽度
+const scale = Dimensions.get('window').scale;           //获取屏幕分辨率
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+export default class StoreEvaluateComponent extends Component {
+    static defaultProps = {
+        rowData: {},
+    };
+
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        let rowData = this.props.rowData;
+        return (
+            <View style={styles.container}>
+                {/*门店名称*/}
+                <View>
+                    <Text style={styles.storeNameText}>
+                        {rowData.storeName}
+                    </Text>
+                </View>
+                {/*类别&渠道*/}
+                <View style={styles.sameView}>
+                    <Text style={[styles.elseText, styles.leftText]}>
+                        类别：{rowData.storeType}
+                    </Text>
+                    <Text style={styles.elseText}>
+                        所属渠道：{rowData.isBelong}
+                    </Text>
+                </View>
+                {/*大区&分局*/}
+                <View style={styles.sameView}>
+                    <Text style={[styles.elseText, styles.leftText]}>
+                        大区：{rowData.area}
+                    </Text>
+                    <Text style={styles.elseText}>
+                        分局：{rowData.fenju}
+                    </Text>
+                </View>
+                {/*渠道编码*/}
+                <View>
+                    <Text style={styles.elseText}>
+                        渠道编码：{rowData.code}
+                    </Text>
+                </View>
+                {/*门店地址*/}
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={styles.elseText}>
+                        门店地址：
+                    </Text>
+                    <Text style={[styles.elseText, {width: width * 0.65}]}>
+                        {rowData.storeAddress}
+                    </Text>
+                </View>
+                {/*审核状态*/}
+                <View style={{position: 'absolute', top: 0, right: 0}}>
+                    <Image
+                        style={{width: 68, height: 64}}
+                        source={
+                            rowData.state == 'A' ? require('../../../Img/img/store_evaluate_A.png') :
+                                rowData.state == 'B' ? require('../../../Img/img/store_evaluate_B.png') :
+                                    require('../../../Img/img/store_evaluate_C.png')
+                        }
+                    />
+                </View>
+                <Icon name='angle-right' size={30} style={{position: 'absolute', top: 60, right: width * 0.04}}/>
+            </View>
+        )
+    }
+}
+const styles = StyleSheet.create({
+    container: {
+        //width: width * 0.97,
+        height: 160,
+        borderWidth: 1,
+        borderColor: '#e5e5e5',
+        marginBottom: 10,
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        padding: 10,
+    },
+    sameView: {
+        flexDirection: 'row',
+    },
+    storeNameText: {
+        fontSize: scale != 1.5 ? 16 : 13,       //判断屏幕分辨率动态设置文本显示字体（1.5为小屏幕，大屏字体差别不大）
+        color: '#000',
+    },
+    elseText: {
+        fontSize: scale != 1.5 ? 12 : 10,       //动态显示文本字体大小
+    },
+    leftText: {
+        width: width * 0.4,
+    }
+});
+
+
+
+
+
