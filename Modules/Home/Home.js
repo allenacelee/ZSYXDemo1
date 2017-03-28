@@ -8,6 +8,7 @@ import {
     TouchableOpacity,
     Image,
     Dimensions,
+    StatusBar,
 } from 'react-native';
 import NavigationBar from '../Pub/NavigationBar/NavigationBar'
 import TopMenuView from './TopMenuView'
@@ -39,6 +40,10 @@ export default class Home extends Component {
                 <NavigationBar
                     title="首页"
                     {...this.props}
+                />
+                <StatusBar
+                    backgroundColor={'#F7F7F7'}
+                    barStyle= {'dark-content'}
                 />
                 <ScrollView style={{width: Width, height: Height - 64}}>
                     {/*<ScrollView style={{backgroundColor: 'white'}}>*/}

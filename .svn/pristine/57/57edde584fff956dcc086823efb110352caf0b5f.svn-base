@@ -1,8 +1,8 @@
 /**
  * =========================================================================
  *
- * @file StoreLoactionComponent
- * @description 门店位置采集公共组件
+ * @file StoreEvaluateComponent
+ * @description 门店评级公共组件
  * =========================================================================
  *
  * @author liana
@@ -18,11 +18,11 @@ import {
     Dimensions,
     Image,
 } from 'react-native';
-const width = Dimensions.get('window').width;       //获取屏幕宽度
-const scale = Dimensions.get('window').scale;       //获取屏幕分辨率
+const width = Dimensions.get('window').width;           //获取屏幕宽度
+const scale = Dimensions.get('window').scale;           //获取屏幕分辨率
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default class StoreLocationComponent extends Component {
+export default class StoreEvaluateComponent extends Component {
     static defaultProps = {
         rowData: {},
     };
@@ -33,6 +33,14 @@ export default class StoreLocationComponent extends Component {
 
     render() {
         let rowData = this.props.rowData;
+        let stateImg;
+        switch (rowData.state){
+            case 'A' : stateImg = require('../../../Img/img/store_evaluate_A.png');
+                break;
+            case 'B' : stateImg = require('../../../Img/img/store_evaluate_B.png');
+                break;
+            case 'C' : stateImg = require('../../../Img/img/store_evaluate_C.png')
+        }
         return (
             <View style={styles.container}>
                 {/*门店名称*/}
@@ -43,7 +51,7 @@ export default class StoreLocationComponent extends Component {
                 </View>
                 {/*类别&渠道*/}
                 <View style={styles.sameView}>
-                    <Text style={[styles.elseText,styles.leftText]}>
+                    <Text style={[styles.elseText, styles.leftText]}>
                         类别：{rowData.storeType}
                     </Text>
                     <Text style={styles.elseText}>
@@ -52,7 +60,7 @@ export default class StoreLocationComponent extends Component {
                 </View>
                 {/*大区&分局*/}
                 <View style={styles.sameView}>
-                    <Text style={[styles.elseText,styles.leftText]}>
+                    <Text style={[styles.elseText, styles.leftText]}>
                         大区：{rowData.area}
                     </Text>
                     <Text style={styles.elseText}>
@@ -66,11 +74,11 @@ export default class StoreLocationComponent extends Component {
                     </Text>
                 </View>
                 {/*门店地址*/}
-                <View style={{flexDirection:'row'}}>
+                <View style={{flexDirection: 'row'}}>
                     <Text style={styles.elseText}>
                         门店地址：
                     </Text>
-                    <Text style={[styles.elseText,{width:width * 0.65}]}>
+                    <Text style={[styles.elseText, {width: width * 0.65}]}>
                         {rowData.storeAddress}
                     </Text>
                 </View>
@@ -78,11 +86,7 @@ export default class StoreLocationComponent extends Component {
                 <View style={{position: 'absolute', top: 0, right: 0}}>
                     <Image
                         style={{width: 68, height: 64}}
-                        source={
-                            rowData.state == 'B' ? require('../../../Img/img/store_evaluate_B.png') :
-                                rowData.state == 'C' ? require('../../../Img/img/store_evaluate_C.png') :
-                                    require('../../../Img/img/store_location_D.png')
-                        }
+                        source={stateImg}
                     />
                 </View>
                 <Icon name='angle-right' size={30} style={{position: 'absolute', top: 60, right: width * 0.04}}/>
@@ -106,13 +110,13 @@ const styles = StyleSheet.create({
     },
     storeNameText: {
         fontSize: scale != 1.5 ? 18 : 15,       //判断屏幕分辨率动态设置文本显示字体（1.5为小屏幕，大屏字体差别不大）
-        color: '#333',
+        color: '#000',
     },
     elseText: {
         fontSize: scale != 1.5 ? 14 : 13,       //动态显示文本字体大小
     },
-    leftText:{
-        width: width * 0.4,
+    leftText: {
+        width: width * 0.35,
     }
 });
 
